@@ -1,0 +1,5 @@
+add_executable(simple simple.cpp)
+target_include_directories(simple PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}../../Include)
+target_link_directories(simple PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}../../Libraries)
+target_link_libraries(simple PUBLIC gfx)
+target_compile_features(simple PUBLIC cxx_std_20)

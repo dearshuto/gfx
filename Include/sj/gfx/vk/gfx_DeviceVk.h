@@ -14,6 +14,8 @@ class DeviceVk
 public:
     void Initialize(const DeviceInfo& deviceInfo) noexcept;
 
+    void Finalize() noexcept;
+
 private:
     VkInstance m_Instance;
     VkDevice m_Device;

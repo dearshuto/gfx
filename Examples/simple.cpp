@@ -1,14 +1,18 @@
 #include <sj/gfx.h>
-#include <sj/gfx/detail/gfx_DeviceConcept.h>
-#include <sj/gfx/gl/gfx_DeviceGl.h>
 
 #include <iostream>
 
 int main()
 {
-    sj::gfx::TDevice<sj::gfx::gl::DeviceGl> device;
+    sj::gfx::Initialize();
+
+    sj::gfx::TDevice<sj::gfx::vk::DeviceVk> device;
     device.Initialize(sj::gfx::DeviceInfo{});
     device.Finalize();
+
+    sj::gfx::TQueue<sj::gfx::vk::QueueVk> queue;
+
+    sj::gfx::Finalize();
 
     std::cout << "Hello World" << std::endl;
     return EXIT_SUCCESS;

@@ -2,4 +2,5 @@
 cmake_policy(SET CMP0076 NEW)
 target_sources(gfx PRIVATE
     gfx_DeviceVk.cpp
+    gfx_QueueVk.cpp
 )

@@ -4,3 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+ash = { version = "*", default-features = false }
+eframe = { version = "0.32.1", features = ["wgpu"] }
+wgpu = "25.0"
+vknew = { git = "https://github.com/dearshuto/vknew.git", branch = "feature/wgpu_compatibility" }

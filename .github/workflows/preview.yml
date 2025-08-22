@@ -37,7 +37,7 @@ jobs:
           # GitHubトークン
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # ビルド成果物のディレクトリ
-          publish_dir: ./docs
+          publish_dir: ./
           # プレビューサイトをデプロイするブランチ
           publish_branch: gh-pages-pr-${{ github.event.number }}
           # 履歴を上書きして新しいビルドをデプロイ

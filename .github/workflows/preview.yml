@@ -1,0 +1,58 @@
+name: Pull Request Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - master
+      - develop
+
+jobs:
+  build-and-deploy-preview:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # プルリクエストのブランチをチェックアウト
+          ref: ${{ github.event.pull_request.head.ref }}
+          # マージコミットではなく履歴全体をフェッチ
+          fetch-depth: 0
+
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+
+      # - name: Install dependencies
+      #   run: npm ci
+
+      # - name: Build site
+      #   run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          # GitHubトークン
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # ビルド成果物のディレクトリ
+          publish_dir: ./docs
+          # プレビューサイトをデプロイするブランチ
+          publish_branch: gh-pages-pr-${{ github.event.number }}
+          # 履歴を上書きして新しいビルドをデプロイ
+          force_orphan: true
+
+      - name: Add comment to PR with preview URL
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = context.issue.number;
+            const previewUrl = `https://${context.repo.owner}.${process.env.GITHUB_PAGES_HOST}/gh-pages-pr-${prNumber}`;
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `🎉 **Preview is ready!**\n\n[Click here to view the changes](${previewUrl})`
+            });

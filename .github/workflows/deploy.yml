@@ -1,0 +1,22 @@
+name: Rust
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+    pull_request:
+      types: [closed]
+      branches:
+        - master
+        - develop
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # ホスト PC 向けのビルド
+      - name: Build
+        run: cargo build
